@@ -1,0 +1,4735 @@
+#VRML_SIM R2025a utf8
+EXTERNPROTO "../protos/StableRobot.proto"
+WorldInfo {
+  title "Master and Three Followers - Moving Turns"
+  info [ "Four physical differential-drive robots; 8 measured left/right turns."
+         "Master measured motion over radio; follower gyro/encoder odometry. Read-only observer." ]
+  basicTimeStep 10
+  randomSeed 12
+  contactProperties [
+    ContactProperties { material1 "rubber" material2 "floor" coulombFriction [ 1.1 ] bounce 0 forceDependentSlip [ 0.001 ] bumpSound "" rollSound "" slideSound "" }
+    ContactProperties { material1 "caster" material2 "floor" coulombFriction [ 0.025 ] bounce 0 softCFM 0.0001 bumpSound "" rollSound "" slideSound "" }
+  ]
+}
+Viewpoint {
+  orientation -0.57735026919 0.57735026919 0.57735026919 2.09439510239
+  position -2.2 -2.0 6.5
+  follow "R1_Green"
+  followType "Tracking Shot"
+  followSmoothness 0.1
+  fieldOfView 0.78
+}
+Background { skyColor [ 0.025 0.04 0.065 ] }
+DirectionalLight { direction -0.4 -0.6 -1 intensity 1.5 castShadows TRUE }
+DirectionalLight { direction 0.6 0.2 -1 intensity 0.5 }
+Solid {
+  translation 0 0 -0.03
+  name "12 metre arena"
+  contactMaterial "floor"
+  children [ Shape { appearance PBRAppearance { baseColor 0.055 0.082 0.12 roughness 1 metalness 0 }
+                     geometry DEF FLOOR Box { size 12 12 0.06 } } ]
+  boundingObject USE FLOOR
+}
+Shape { appearance Appearance { material Material { diffuseColor 0.065 0.085 0.11 emissiveColor 0.065 0.085 0.11 transparency 0.94 } }
+      geometry IndexedLineSet { coord Coordinate { point [ -6.00000 -6.00000 0.00100, 6.00000 -6.00000 0.00100, -6.00000 -6.00000 0.00100, -6.00000 6.00000 0.00100, -6.00000 -5.50000 0.00100, 6.00000 -5.50000 0.00100, -5.50000 -6.00000 0.00100, -5.50000 6.00000 0.00100, -6.00000 -5.00000 0.00100, 6.00000 -5.00000 0.00100, -5.00000 -6.00000 0.00100, -5.00000 6.00000 0.00100, -6.00000 -4.50000 0.00100, 6.00000 -4.50000 0.00100, -4.50000 -6.00000 0.00100, -4.50000 6.00000 0.00100, -6.00000 -4.00000 0.00100, 6.00000 -4.00000 0.00100, -4.00000 -6.00000 0.00100, -4.00000 6.00000 0.00100, -6.00000 -3.50000 0.00100, 6.00000 -3.50000 0.00100, -3.50000 -6.00000 0.00100, -3.50000 6.00000 0.00100, -6.00000 -3.00000 0.00100, 6.00000 -3.00000 0.00100, -3.00000 -6.00000 0.00100, -3.00000 6.00000 0.00100, -6.00000 -2.50000 0.00100, 6.00000 -2.50000 0.00100, -2.50000 -6.00000 0.00100, -2.50000 6.00000 0.00100, -6.00000 -2.00000 0.00100, 6.00000 -2.00000 0.00100, -2.00000 -6.00000 0.00100, -2.00000 6.00000 0.00100, -6.00000 -1.50000 0.00100, 6.00000 -1.50000 0.00100, -1.50000 -6.00000 0.00100, -1.50000 6.00000 0.00100, -6.00000 -1.00000 0.00100, 6.00000 -1.00000 0.00100, -1.00000 -6.00000 0.00100, -1.00000 6.00000 0.00100, -6.00000 -0.50000 0.00100, 6.00000 -0.50000 0.00100, -0.50000 -6.00000 0.00100, -0.50000 6.00000 0.00100, -6.00000 0.00000 0.00100, 6.00000 0.00000 0.00100, 0.00000 -6.00000 0.00100, 0.00000 6.00000 0.00100, -6.00000 0.50000 0.00100, 6.00000 0.50000 0.00100, 0.50000 -6.00000 0.00100, 0.50000 6.00000 0.00100, -6.00000 1.00000 0.00100, 6.00000 1.00000 0.00100, 1.00000 -6.00000 0.00100, 1.00000 6.00000 0.00100, -6.00000 1.50000 0.00100, 6.00000 1.50000 0.00100, 1.50000 -6.00000 0.00100, 1.50000 6.00000 0.00100, -6.00000 2.00000 0.00100, 6.00000 2.00000 0.00100, 2.00000 -6.00000 0.00100, 2.00000 6.00000 0.00100, -6.00000 2.50000 0.00100, 6.00000 2.50000 0.00100, 2.50000 -6.00000 0.00100, 2.50000 6.00000 0.00100, -6.00000 3.00000 0.00100, 6.00000 3.00000 0.00100, 3.00000 -6.00000 0.00100, 3.00000 6.00000 0.00100, -6.00000 3.50000 0.00100, 6.00000 3.50000 0.00100, 3.50000 -6.00000 0.00100, 3.50000 6.00000 0.00100, -6.00000 4.00000 0.00100, 6.00000 4.00000 0.00100, 4.00000 -6.00000 0.00100, 4.00000 6.00000 0.00100, -6.00000 4.50000 0.00100, 6.00000 4.50000 0.00100, 4.50000 -6.00000 0.00100, 4.50000 6.00000 0.00100, -6.00000 5.00000 0.00100, 6.00000 5.00000 0.00100, 5.00000 -6.00000 0.00100, 5.00000 6.00000 0.00100, -6.00000 5.50000 0.00100, 6.00000 5.50000 0.00100, 5.50000 -6.00000 0.00100, 5.50000 6.00000 0.00100, -6.00000 6.00000 0.00100, 6.00000 6.00000 0.00100, 6.00000 -6.00000 0.00100, 6.00000 6.00000 0.00100 ] } coordIndex [ 0 1 -1 2 3 -1 4 5 -1 6 7 -1 8 9 -1 10 11 -1 12 13 -1 14 15 -1 16 17 -1 18 19 -1 20 21 -1 22 23 -1 24 25 -1 26 27 -1 28 29 -1 30 31 -1 32 33 -1 34 35 -1 36 37 -1 38 39 -1 40 41 -1 42 43 -1 44 45 -1 46 47 -1 48 49 -1 50 51 -1 52 53 -1 54 55 -1 56 57 -1 58 59 -1 60 61 -1 62 63 -1 64 65 -1 66 67 -1 68 69 -1 70 71 -1 72 73 -1 74 75 -1 76 77 -1 78 79 -1 80 81 -1 82 83 -1 84 85 -1 86 87 -1 88 89 -1 90 91 -1 92 93 -1 94 95 -1 96 97 -1 98 99 -1 ] } }
+Solid {
+  name "Lab perimeter walls and skirting"
+  children [ Pose { translation -3.25 0.5 0.32 children [ Shape { appearance PBRAppearance { baseColor 0.29 0.33 0.38 roughness 0.8 metalness 0 } geometry Box { size 0.12 7.65 0.64 } } ] } Pose { translation -3.25 0.5 0.065 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.14 7.65 0.13 } } ] } Pose { translation 4.05 0.5 0.32 children [ Shape { appearance PBRAppearance { baseColor 0.29 0.33 0.38 roughness 0.8 metalness 0 } geometry Box { size 0.12 7.65 0.64 } } ] } Pose { translation 4.05 0.5 0.065 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.14 7.65 0.13 } } ] } Pose { translation 0.4 -3.28 0.32 children [ Shape { appearance PBRAppearance { baseColor 0.29 0.33 0.38 roughness 0.8 metalness 0 } geometry Box { size 7.42 0.12 0.64 } } ] } Pose { translation 0.4 -3.28 0.065 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 7.42 0.14 0.13 } } ] } Pose { translation 0.4 4.28 0.32 children [ Shape { appearance PBRAppearance { baseColor 0.29 0.33 0.38 roughness 0.8 metalness 0 } geometry Box { size 7.42 0.12 0.64 } } ] } Pose { translation 0.4 4.28 0.065 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 7.42 0.14 0.13 } } ] } ]
+  boundingObject Group { children [ Pose { translation -3.25 0.5 0.32 children [ Box { size 0.12 7.65 0.64 } ] } Pose { translation -3.25 0.5 0.065 children [ Box { size 0.14 7.65 0.13 } ] } Pose { translation 4.05 0.5 0.32 children [ Box { size 0.12 7.65 0.64 } ] } Pose { translation 4.05 0.5 0.065 children [ Box { size 0.14 7.65 0.13 } ] } Pose { translation 0.4 -3.28 0.32 children [ Box { size 7.42 0.12 0.64 } ] } Pose { translation 0.4 -3.28 0.065 children [ Box { size 7.42 0.14 0.13 } ] } Pose { translation 0.4 4.28 0.32 children [ Box { size 7.42 0.12 0.64 } ] } Pose { translation 0.4 4.28 0.065 children [ Box { size 7.42 0.14 0.13 } ] } ] }
+}
+Solid {
+  name "Electronics workbench"
+  children [ Pose { translation 0.15 -2.98 0.64 children [ Shape { appearance PBRAppearance { baseColor 0.37 0.28 0.19 roughness 0.8 metalness 0 } geometry Box { size 3.0 0.4 0.08 } } ] } Pose { translation -0.88 -2.98 0.3 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.66 0.36 0.6 } } ] } Pose { translation 1.18 -2.98 0.3 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.66 0.36 0.6 } } ] } Pose { translation 0.1 -2.98 0.76 children [ Shape { appearance PBRAppearance { baseColor 0.25 0.29 0.34 roughness 0.8 metalness 0 } geometry Box { size 0.43 0.26 0.15 } } ] } Pose { translation 0.6 -2.98 0.77 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.24 0.25 0.18 } } ] } Pose { translation -0.88 -2.788 0.18 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } Pose { translation -0.88 -2.788 0.38 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } Pose { translation -0.88 -2.788 0.56 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } Pose { translation 1.18 -2.788 0.18 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } Pose { translation 1.18 -2.788 0.38 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } Pose { translation 1.18 -2.788 0.56 children [ Shape { appearance PBRAppearance { baseColor 0.4 0.44 0.47 roughness 0.8 metalness 0 } geometry Box { size 0.3 0.014 0.016 } } ] } ]
+  boundingObject Group { children [ Pose { translation 0.15 -2.98 0.64 children [ Box { size 3.0 0.4 0.08 } ] } Pose { translation -0.88 -2.98 0.3 children [ Box { size 0.66 0.36 0.6 } ] } Pose { translation 1.18 -2.98 0.3 children [ Box { size 0.66 0.36 0.6 } ] } Pose { translation 0.1 -2.98 0.76 children [ Box { size 0.43 0.26 0.15 } ] } Pose { translation 0.6 -2.98 0.77 children [ Box { size 0.24 0.25 0.18 } ] } Pose { translation -0.88 -2.788 0.18 children [ Box { size 0.3 0.014 0.016 } ] } Pose { translation -0.88 -2.788 0.38 children [ Box { size 0.3 0.014 0.016 } ] } Pose { translation -0.88 -2.788 0.56 children [ Box { size 0.3 0.014 0.016 } ] } Pose { translation 1.18 -2.788 0.18 children [ Box { size 0.3 0.014 0.016 } ] } Pose { translation 1.18 -2.788 0.38 children [ Box { size 0.3 0.014 0.016 } ] } Pose { translation 1.18 -2.788 0.56 children [ Box { size 0.3 0.014 0.016 } ] } ] }
+}
+Solid {
+  name "West storage and assembly bench"
+  children [ Pose { translation -2.98 -0.65 0.37 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.38 2.5 0.74 } } ] } Pose { translation -2.98 -0.65 0.76 children [ Shape { appearance PBRAppearance { baseColor 0.37 0.28 0.19 roughness 0.8 metalness 0 } geometry Box { size 0.42 2.55 0.06 } } ] } Pose { translation -2.98 -1.38 0.88 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.28 0.4 0.18 } } ] } Pose { translation -2.98 0.08 0.86 children [ Shape { appearance PBRAppearance { baseColor 0.25 0.31 0.36 roughness 0.8 metalness 0 } geometry Box { size 0.26 0.48 0.14 } } ] } ]
+  boundingObject Group { children [ Pose { translation -2.98 -0.65 0.37 children [ Box { size 0.38 2.5 0.74 } ] } Pose { translation -2.98 -0.65 0.76 children [ Box { size 0.42 2.55 0.06 } ] } Pose { translation -2.98 -1.38 0.88 children [ Box { size 0.28 0.4 0.18 } ] } Pose { translation -2.98 0.08 0.86 children [ Box { size 0.26 0.48 0.14 } ] } ] }
+}
+Solid {
+  name "East shelving and parts boxes"
+  children [ Pose { translation 3.54 -0.3 0.65 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.035 0.035 1.3 } } ] } Pose { translation 3.84 -0.3 0.65 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.035 0.035 1.3 } } ] } Pose { translation 3.54 2.35 0.65 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.035 0.035 1.3 } } ] } Pose { translation 3.84 2.35 0.65 children [ Shape { appearance PBRAppearance { baseColor 0.13 0.17 0.22 roughness 0.8 metalness 0 } geometry Box { size 0.035 0.035 1.3 } } ] } Pose { translation 3.69 1.025 0.1 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.36 2.7 0.045 } } ] } Pose { translation 3.69 1.025 0.55 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.36 2.7 0.045 } } ] } Pose { translation 3.69 1.025 1.02 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.36 2.7 0.045 } } ] } Pose { translation 3.69 0.12 0.28 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.24 0.43 0.31 } } ] } Pose { translation 3.69 0.89 0.29 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.25 0.51 0.33 } } ] } Pose { translation 3.69 1.7 0.7 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.25 0.42 0.26 } } ] } Pose { translation 3.69 0.45 1.18 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.23 0.47 0.28 } } ] } ]
+  boundingObject Group { children [ Pose { translation 3.54 -0.3 0.65 children [ Box { size 0.035 0.035 1.3 } ] } Pose { translation 3.84 -0.3 0.65 children [ Box { size 0.035 0.035 1.3 } ] } Pose { translation 3.54 2.35 0.65 children [ Box { size 0.035 0.035 1.3 } ] } Pose { translation 3.84 2.35 0.65 children [ Box { size 0.035 0.035 1.3 } ] } Pose { translation 3.69 1.025 0.1 children [ Box { size 0.36 2.7 0.045 } ] } Pose { translation 3.69 1.025 0.55 children [ Box { size 0.36 2.7 0.045 } ] } Pose { translation 3.69 1.025 1.02 children [ Box { size 0.36 2.7 0.045 } ] } Pose { translation 3.69 0.12 0.28 children [ Box { size 0.24 0.43 0.31 } ] } Pose { translation 3.69 0.89 0.29 children [ Box { size 0.25 0.51 0.33 } ] } Pose { translation 3.69 1.7 0.7 children [ Box { size 0.25 0.42 0.26 } ] } Pose { translation 3.69 0.45 1.18 children [ Box { size 0.23 0.47 0.28 } ] } ] }
+}
+Solid {
+  name "North packing counter"
+  children [ Pose { translation 1.25 3.91 0.34 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 2.6 0.42 0.68 } } ] } Pose { translation 1.25 3.91 0.71 children [ Shape { appearance PBRAppearance { baseColor 0.37 0.28 0.19 roughness 0.8 metalness 0 } geometry Box { size 2.7 0.46 0.06 } } ] } Pose { translation 0.4 3.91 0.88 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.43 0.32 0.28 } } ] } Pose { translation 1.95 3.91 0.85 children [ Shape { appearance PBRAppearance { baseColor 0.44 0.36 0.26 roughness 0.8 metalness 0 } geometry Box { size 0.5 0.31 0.23 } } ] } Pose { translation -2.75 3.85 0.48 children [ Shape { appearance PBRAppearance { baseColor 0.17 0.23 0.29 roughness 0.8 metalness 0 } geometry Box { size 0.65 0.6 0.96 } } ] } ]
+  boundingObject Group { children [ Pose { translation 1.25 3.91 0.34 children [ Box { size 2.6 0.42 0.68 } ] } Pose { translation 1.25 3.91 0.71 children [ Box { size 2.7 0.46 0.06 } ] } Pose { translation 0.4 3.91 0.88 children [ Box { size 0.43 0.32 0.28 } ] } Pose { translation 1.95 3.91 0.85 children [ Box { size 0.5 0.31 0.23 } ] } Pose { translation -2.75 3.85 0.48 children [ Box { size 0.65 0.6 0.96 } ] } ] }
+}
+Pose { translation 0.35 0.45 0.0002 children [
+      Shape { appearance PBRAppearance { baseColor 0.058 0.078 0.10 roughness 1 metalness 0 }
+              geometry Box { size 6.0 6.05 0.0002 } }
+    ] }
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_0 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_0 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_1 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_1 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_2 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_2 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_3 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_3 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_4 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_4 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_5 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_5 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_6 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_6 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_7 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_7 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_8 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_8 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_9 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_9 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_10 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_10 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_11 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_11 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_12 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_12 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_13 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_13 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_14 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_14 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_15 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_15 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_16 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_16 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_17 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_17 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_18 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_18 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_19 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_19 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_20 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_20 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_21 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_21 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_22 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_22 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_23 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_23 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_24 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_24 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_25 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_25 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_26 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_26 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_27 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_27 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_28 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_28 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_29 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_29 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_30 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_30 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_31 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_31 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_32 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_32 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_33 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_33 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_34 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_34 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_35 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_35 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_36 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_36 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_37 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_37 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_38 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_38 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_39 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_39 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_40 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_40 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_41 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_41 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_42 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_42 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_43 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_43 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_44 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_44 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_45 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_45 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_46 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_46 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_47 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_47 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_48 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_48 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_49 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_49 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_50 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_50 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_51 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_51 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_52 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_52 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_53 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_53 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_54 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_54 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_55 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_55 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_56 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_56 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_57 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_57 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_58 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_58 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_59 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_59 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_60 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_60 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_61 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_61 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_62 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_62 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_63 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_63 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_64 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_64 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_65 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_65 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_66 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_66 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_67 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_67 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_68 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_68 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_69 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_69 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_70 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_70 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_71 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_71 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_72 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_72 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_73 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_73 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_74 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_74 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_75 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_75 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_76 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_76 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_77 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_77 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_78 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_78 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_79 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_79 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_80 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_80 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_81 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_81 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_82 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_82 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_83 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_83 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_84 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_84 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_85 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_85 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_86 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_86 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_87 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_87 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_88 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_88 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_89 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_89 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_90 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_90 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_91 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_91 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_92 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_92 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_93 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_93 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_94 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_94 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_95 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_95 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_96 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_96 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_97 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_97 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_98 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_98 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_99 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_99 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_100 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_100 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_101 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_101 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_102 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_102 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_103 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_103 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_104 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_104 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_105 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_105 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_106 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_106 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_107 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_107 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_108 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_108 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_109 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_109 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_110 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_110 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_111 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_111 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_112 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_112 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_113 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_113 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_114 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_114 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_115 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_115 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_116 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_116 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_117 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_117 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_118 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_118 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_119 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_119 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_120 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_120 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_121 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_121 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_122 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_122 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_123 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_123 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_124 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_124 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_125 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_125 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_126 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_126 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_0_127 Material {
+    diffuseColor 0.0739 0.34996 0.2334 emissiveColor 0.0739 0.34996 0.2334 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_0_127 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_0 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_0 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_1 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_1 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_2 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_2 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_3 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_3 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_4 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_4 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_5 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_5 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_6 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_6 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_7 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_7 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_8 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_8 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_9 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_9 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_10 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_10 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_11 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_11 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_12 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_12 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_13 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_13 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_14 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_14 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_15 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_15 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_16 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_16 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_17 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_17 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_18 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_18 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_19 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_19 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_20 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_20 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_21 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_21 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_22 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_22 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_23 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_23 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_24 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_24 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_25 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_25 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_26 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_26 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_27 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_27 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_28 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_28 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_29 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_29 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_30 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_30 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_31 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_31 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_32 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_32 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_33 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_33 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_34 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_34 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_35 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_35 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_36 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_36 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_37 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_37 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_38 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_38 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_39 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_39 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_40 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_40 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_41 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_41 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_42 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_42 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_43 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_43 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_44 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_44 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_45 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_45 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_46 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_46 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_47 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_47 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_48 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_48 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_49 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_49 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_50 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_50 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_51 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_51 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_52 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_52 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_53 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_53 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_54 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_54 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_55 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_55 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_56 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_56 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_57 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_57 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_58 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_58 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_59 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_59 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_60 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_60 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_61 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_61 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_62 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_62 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_63 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_63 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_64 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_64 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_65 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_65 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_66 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_66 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_67 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_67 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_68 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_68 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_69 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_69 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_70 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_70 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_71 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_71 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_72 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_72 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_73 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_73 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_74 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_74 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_75 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_75 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_76 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_76 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_77 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_77 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_78 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_78 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_79 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_79 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_80 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_80 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_81 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_81 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_82 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_82 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_83 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_83 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_84 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_84 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_85 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_85 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_86 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_86 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_87 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_87 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_88 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_88 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_89 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_89 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_90 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_90 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_91 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_91 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_92 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_92 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_93 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_93 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_94 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_94 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_95 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_95 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_96 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_96 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_97 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_97 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_98 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_98 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_99 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_99 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_100 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_100 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_101 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_101 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_102 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_102 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_103 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_103 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_104 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_104 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_105 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_105 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_106 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_106 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_107 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_107 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_108 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_108 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_109 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_109 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_110 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_110 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_111 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_111 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_112 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_112 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_113 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_113 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_114 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_114 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_115 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_115 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_116 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_116 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_117 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_117 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_118 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_118 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_119 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_119 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_120 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_120 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_121 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_121 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_122 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_122 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_123 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_123 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_124 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_124 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_125 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_125 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_126 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_126 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_1_127 Material {
+    diffuseColor 0.0949 0.27016 0.46859999999999996 emissiveColor 0.0949 0.27016 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_1_127 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_0 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_0 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_1 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_1 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_2 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_2 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_3 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_3 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_4 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_4 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_5 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_5 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_6 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_6 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_7 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_7 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_8 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_8 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_9 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_9 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_10 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_10 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_11 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_11 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_12 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_12 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_13 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_13 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_14 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_14 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_15 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_15 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_16 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_16 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_17 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_17 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_18 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_18 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_19 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_19 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_20 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_20 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_21 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_21 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_22 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_22 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_23 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_23 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_24 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_24 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_25 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_25 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_26 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_26 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_27 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_27 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_28 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_28 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_29 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_29 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_30 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_30 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_31 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_31 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_32 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_32 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_33 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_33 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_34 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_34 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_35 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_35 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_36 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_36 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_37 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_37 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_38 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_38 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_39 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_39 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_40 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_40 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_41 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_41 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_42 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_42 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_43 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_43 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_44 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_44 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_45 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_45 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_46 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_46 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_47 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_47 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_48 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_48 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_49 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_49 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_50 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_50 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_51 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_51 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_52 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_52 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_53 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_53 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_54 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_54 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_55 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_55 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_56 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_56 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_57 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_57 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_58 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_58 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_59 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_59 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_60 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_60 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_61 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_61 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_62 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_62 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_63 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_63 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_64 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_64 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_65 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_65 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_66 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_66 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_67 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_67 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_68 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_68 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_69 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_69 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_70 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_70 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_71 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_71 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_72 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_72 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_73 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_73 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_74 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_74 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_75 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_75 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_76 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_76 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_77 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_77 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_78 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_78 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_79 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_79 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_80 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_80 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_81 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_81 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_82 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_82 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_83 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_83 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_84 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_84 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_85 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_85 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_86 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_86 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_87 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_87 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_88 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_88 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_89 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_89 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_90 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_90 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_91 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_91 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_92 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_92 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_93 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_93 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_94 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_94 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_95 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_95 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_96 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_96 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_97 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_97 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_98 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_98 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_99 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_99 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_100 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_100 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_101 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_101 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_102 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_102 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_103 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_103 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_104 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_104 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_105 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_105 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_106 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_106 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_107 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_107 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_108 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_108 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_109 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_109 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_110 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_110 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_111 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_111 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_112 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_112 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_113 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_113 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_114 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_114 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_115 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_115 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_116 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_116 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_117 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_117 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_118 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_118 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_119 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_119 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_120 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_120 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_121 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_121 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_122 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_122 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_123 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_123 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_124 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_124 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_125 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_125 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_126 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_126 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_2_127 Material {
+    diffuseColor 0.45189999999999997 0.24915999999999996 0.12 emissiveColor 0.45189999999999997 0.24915999999999996 0.12 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_2_127 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_0 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_0 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_1 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_1 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_2 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_2 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_3 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_3 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_4 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_4 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_5 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_5 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_6 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_6 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_7 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_7 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_8 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_8 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_9 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_9 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_10 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_10 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_11 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_11 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_12 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_12 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_13 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_13 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_14 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_14 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_15 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_15 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_16 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_16 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_17 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_17 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_18 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_18 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_19 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_19 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_20 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_20 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_21 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_21 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_22 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_22 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_23 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_23 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_24 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_24 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_25 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_25 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_26 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_26 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_27 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_27 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_28 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_28 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_29 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_29 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_30 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_30 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_31 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_31 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_32 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_32 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_33 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_33 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_34 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_34 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_35 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_35 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_36 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_36 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_37 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_37 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_38 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_38 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_39 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_39 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_40 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_40 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_41 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_41 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_42 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_42 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_43 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_43 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_44 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_44 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_45 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_45 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_46 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_46 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_47 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_47 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_48 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_48 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_49 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_49 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_50 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_50 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_51 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_51 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_52 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_52 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_53 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_53 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_54 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_54 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_55 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_55 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_56 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_56 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_57 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_57 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_58 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_58 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_59 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_59 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_60 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_60 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_61 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_61 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_62 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_62 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_63 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_63 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_64 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_64 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_65 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_65 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_66 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_66 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_67 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_67 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_68 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_68 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_69 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_69 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_70 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_70 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_71 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_71 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_72 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_72 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_73 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_73 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_74 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_74 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_75 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_75 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_76 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_76 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_77 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_77 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_78 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_78 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_79 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_79 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_80 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_80 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_81 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_81 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_82 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_82 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_83 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_83 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_84 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_84 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_85 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_85 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_86 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_86 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_87 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_87 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_88 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_88 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_89 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_89 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_90 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_90 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_91 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_91 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_92 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_92 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_93 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_93 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_94 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_94 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_95 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_95 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_96 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_96 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_97 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_97 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_98 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_98 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_99 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_99 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_100 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_100 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_101 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_101 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_102 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_102 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_103 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_103 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_104 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_104 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_105 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_105 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_106 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_106 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_107 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_107 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_108 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_108 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_109 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_109 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_110 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_110 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_111 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_111 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_112 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_112 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_113 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_113 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_114 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_114 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_115 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_115 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_116 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_116 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_117 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_117 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_118 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_118 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_119 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_119 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_120 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_120 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_121 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_121 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_122 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_122 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_123 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_123 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_124 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_124 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_125 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_125 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_126 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_126 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF FADE_MAT_3_127 Material {
+    diffuseColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 emissiveColor 0.32589999999999997 0.19455999999999998 0.46859999999999996 transparency 1
+  } }
+  geometry IndexedLineSet {
+    coord DEF FADE_COORD_3_127 Coordinate { point [ 0 0 0.004 0 0 0.004 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_RED_0 Material {
+    diffuseColor 0.6 0.22 0.18 emissiveColor 0.6 0.22 0.18 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_RED_0 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_RED_1 Material {
+    diffuseColor 0.6 0.22 0.18 emissiveColor 0.6 0.22 0.18 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_RED_1 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_RED_2 Material {
+    diffuseColor 0.6 0.22 0.18 emissiveColor 0.6 0.22 0.18 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_RED_2 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_GREEN_0 Material {
+    diffuseColor 0.22 0.56 0.32 emissiveColor 0.22 0.56 0.32 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_GREEN_0 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_GREEN_1 Material {
+    diffuseColor 0.22 0.56 0.32 emissiveColor 0.22 0.56 0.32 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_GREEN_1 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+Shape {
+  appearance Appearance { material DEF LINK_MAT_GREEN_2 Material {
+    diffuseColor 0.22 0.56 0.32 emissiveColor 0.22 0.56 0.32 transparency 0.98
+  } }
+  geometry IndexedLineSet {
+    coord DEF LINK_COORD_GREEN_2 Coordinate { point [ 0 0 0.009 0 0 0.009 ] }
+    coordIndex [ 0 1 -1 ]
+  }
+}
+DEF ROBOT_0 StableRobot { translation -1.4 -1.6 0 name "R1_Green" controller "master_robot" bodyColor 0.1 0.72 0.39 }
+DEF ROBOT_1 StableRobot { translation -1.4 -2.4 0 name "R2_Blue" controller "stable_robot" bodyColor 0.15 0.53 0.95 }
+DEF ROBOT_2 StableRobot { translation -2.2 -1.6 0 name "R3_Orange" controller "stable_robot" bodyColor 1.0 0.48 0.12 }
+DEF ROBOT_3 StableRobot { translation -2.2 -2.4 0 name "R4_Purple" controller "stable_robot" bodyColor 0.7 0.35 0.95 }
+Robot {
+  name "Mission display and measurement"
+  supervisor TRUE
+  controller "demo_supervisor"
+  children [ Receiver { name "master_monitor" channel 42 } Receiver { name "follower_monitor" channel 43 } ]
+}

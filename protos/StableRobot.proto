@@ -1,0 +1,97 @@
+#VRML_SIM R2025a utf8
+PROTO StableRobot [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFString name "R1_Green"
+  field SFString controller "stable_robot"
+  field SFColor bodyColor 0.1 0.72 0.39
+] {
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    controller IS controller
+    children [
+      Pose { translation 0 0 0.052 children [
+        Shape { appearance PBRAppearance { baseColor IS bodyColor roughness 0.4 metalness 0.1 }
+                geometry Box { size 0.23 0.19 0.054 } }
+      ] }
+      Pose { translation 0.084 0 0.083 rotation 0 1 0 1.57079632679 children [
+        Shape { appearance PBRAppearance { baseColor 0.95 0.98 1 roughness 0.5 }
+                geometry Cone { bottomRadius 0.023 height 0.05 subdivision 3 } }
+      ] }
+      Pose { translation -0.035 0 0.084 children [
+        Shape { appearance PBRAppearance { baseColor 0.04 0.065 0.09 roughness 0.4 }
+                geometry Box { size 0.065 0.09 0.01 } }
+      ] }
+
+      HingeJoint {
+        jointParameters HingeJointParameters { axis 0 1 0 anchor 0 0.12 0.045 dampingConstant 0.001 }
+        device [ RotationalMotor { name "left_motor" maxVelocity 8 maxTorque 0.30 acceleration 7 sound "" } PositionSensor { name "left_encoder" } ]
+        endPoint Solid {
+          translation 0 0.12 0.045
+          rotation 1 0 0 1.57079632679
+          name "left_wheel"
+          contactMaterial "rubber"
+          children [
+            Shape { appearance PBRAppearance { baseColor 0.025 0.032 0.045 roughness 0.65 metalness 0.05 } geometry Cylinder { radius 0.045 height 0.026 subdivision 32 } }
+            Pose { translation 0 0 0.014 children [ Shape { appearance PBRAppearance { baseColor 0.65 0.72 0.8 roughness 0.65 metalness 0.05 } geometry Cylinder { radius 0.022 height 0.002 } } ] }
+          ]
+          boundingObject Cylinder { radius 0.045 height 0.026 subdivision 32 }
+          physics Physics { density -1 mass 0.065 }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters { axis 0 1 0 anchor 0 -0.12 0.045 dampingConstant 0.001 }
+        device [ RotationalMotor { name "right_motor" maxVelocity 8 maxTorque 0.30 acceleration 7 sound "" } PositionSensor { name "right_encoder" } ]
+        endPoint Solid {
+          translation 0 -0.12 0.045
+          rotation 1 0 0 1.57079632679
+          name "right_wheel"
+          contactMaterial "rubber"
+          children [
+            Shape { appearance PBRAppearance { baseColor 0.025 0.032 0.045 roughness 0.65 metalness 0.05 } geometry Cylinder { radius 0.045 height 0.026 subdivision 32 } }
+            Pose { translation 0 0 0.014 children [ Shape { appearance PBRAppearance { baseColor 0.65 0.72 0.8 roughness 0.65 metalness 0.05 } geometry Cylinder { radius 0.022 height 0.002 } } ] }
+          ]
+          boundingObject Cylinder { radius 0.045 height 0.026 subdivision 32 }
+          physics Physics { density -1 mass 0.065 }
+        }
+      }
+      BallJoint {
+        jointParameters BallJointParameters { anchor -0.095 0 0.012 }
+        endPoint Solid {
+          translation -0.095 0 0.012
+          name "rear_support"
+          contactMaterial "caster"
+          children [ Shape { appearance PBRAppearance { baseColor 0.42 0.48 0.55 roughness 0.65 metalness 0.05 } geometry Sphere { radius 0.012 subdivision 2 } } ]
+          boundingObject Sphere { radius 0.012 subdivision 2 }
+          physics Physics { density -1 mass 0.015 }
+        }
+      }
+      BallJoint {
+        jointParameters BallJointParameters { anchor 0.095 0 0.012 }
+        endPoint Solid {
+          translation 0.095 0 0.012
+          name "front_support"
+          contactMaterial "caster"
+          children [ Shape { appearance PBRAppearance { baseColor 0.42 0.48 0.55 roughness 0.65 metalness 0.05 } geometry Sphere { radius 0.012 subdivision 2 } } ]
+          boundingObject Sphere { radius 0.012 subdivision 2 }
+          physics Physics { density -1 mass 0.015 }
+        }
+      }
+      Gyro { name "gyro" }
+      Receiver { name "state_receiver" channel 42 signalStrengthNoise 0.01 }
+      Receiver { name "feedback_receiver" channel 43 }
+      Emitter { name "state_sender" channel 42 range 20 }
+      Emitter { name "feedback_sender" channel 43 range 20 }
+      Receiver { name "peer_receiver" channel 44 }
+      Emitter { name "peer_sender" channel 44 range 20 }
+    ]
+    boundingObject Pose { translation 0 0 0.052 children [ Box { size 0.23 0.19 0.054 } ] }
+    physics Physics {
+      density -1
+      mass 0.85
+      centerOfMass [ 0 0 0.035 ]
+    }
+  }
+}
