@@ -30,17 +30,6 @@ The master transmits only measured motion and diagnostic state. It now receives 
 
 All eight moving turns completed. The radio-loss scenario also confirmed a watchdog stop, continued master rotation during the blackout, and resumed follower tracking. The stationary scenario confirmed that all followers detected the master's in-place turn through radio.
 
-## Evidence
-
-- `runtime/verification/summary.json`: all three current reports.
-- `runtime/verification/<scenario>/report.json`: physical checks, peer freshness, and the five unique communication links.
-- `runtime/verification/<scenario>/samples.json`: physical trajectories.
-- `runtime/verification/nominal/turn_04.jpg`: moving robots, fading paths and both triangles.
-- `runtime/verification/nominal/fade_early.jpg`: recent trails after the master stops.
-- `runtime/verification/nominal/fade_clear.jpg`: paths disappear while communication triangles remain.
-- `runtime/verification/architecture_audit.json`: no follower mission import, global pose, absolute yaw or radio-bearing input; no supervisor command transmitter or physical body manipulation.
-- `runtime/verification/nominal/paths.json`: complete measured routes and timestamps. The SVG represents only the currently visible fading trails; it is clear after sufficient stillness.
-
 The robots still rely on known aligned starting geometry, gyro/encoder odometry and simulated scalar ranging. Results validate this Webots configuration, not hardware ranging or arbitrary-start localization.
 
 The original Simulations directory retains all 85 original files with unchanged SHA-256 hashes and no additional files. See `runtime/verification/source_integrity.json` and the baseline `source_folder_hashes.json`.
